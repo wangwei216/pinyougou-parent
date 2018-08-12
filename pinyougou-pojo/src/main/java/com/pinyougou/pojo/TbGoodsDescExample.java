@@ -1,10 +1,9 @@
 package com.pinyougou.pojo;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TbGoodsDescExample implements Serializable{
+public class TbGoodsDescExample {
     protected String orderByClause;
 
     protected boolean distinct;

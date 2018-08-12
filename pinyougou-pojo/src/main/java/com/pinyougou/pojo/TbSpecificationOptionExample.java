@@ -1,10 +1,9 @@
 package com.pinyougou.pojo;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TbSpecificationOptionExample implements Serializable{
+public class TbSpecificationOptionExample {
     protected String orderByClause;
 
     protected boolean distinct;

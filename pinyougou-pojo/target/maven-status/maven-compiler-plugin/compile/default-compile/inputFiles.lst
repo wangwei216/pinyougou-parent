@@ -2,6 +2,7 @@ D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbGoodsExample.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbAddressExample.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbOrder.java
+D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojogroup\Specification.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbSeller.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbSpecificationExample.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbContent.java
@@ -22,11 +23,13 @@ D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbOrderExample.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbTypeTemplateExample.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbUserExample.java
+D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\entity\Result.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbAreasExample.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbSpecificationOptionExample.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbItemCat.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbSpecificationOption.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbTypeTemplate.java
+D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\entity\PageResult.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbPayLogExample.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbBrand.java
 D:\eclipse-jee-marsPath\workspace\pinyougou-parent\pinyougou-pojo\src\main\java\com\pinyougou\pojo\TbBrandExample.java
