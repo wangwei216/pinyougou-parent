@@ -12,7 +12,7 @@
 	<http pattern="/plugins/**" security="none"></http>
 
 	<!-- 页面的拦截规则    use-expressions:是否启动SPEL表达式 默认是true -->
-	<http use-expressions="false">
+	<http use-expressions="false" >
 		<!-- 当前用户必须有ROLE_USER的角色 才可以访问根目录及所属子目录的资源 -->
 		<intercept-url pattern="/**" access="ROLE_ADMIN"/>
 		<!-- 开启表单登陆功能 -->
@@ -24,12 +24,14 @@
 		<logout/>
 	</http>
 	
+	
 	<!-- 认证管理器 -->
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
 				<user name="admin" password="123456" authorities="ROLE_ADMIN"/>
 				<user name="sunwukong" password="dasheng" authorities="ROLE_ADMIN"/>
+				<user name="wangwei" password="123456" authorities="ROLE_ADMIN"/>
 			</user-service>
 		</authentication-provider>	
 	</authentication-manager>

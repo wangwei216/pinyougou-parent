@@ -58,4 +58,12 @@ public interface SellerService {
 	 */
 	public PageResult findPage(TbSeller seller, int pageNum,int pageSize);
 	
+	/**
+	 * 修改商户店铺的状态，根据店铺id
+	 * 0：表示未审核 ，1：表示已审核,2：表示审核未通过，3：表示售假其他
+	 * @param sellerId
+	 * @param status
+	 */
+	public void updateStatus(String sellerId , String status);
+	
 }

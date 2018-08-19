@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+   
+	<!-- 设置页面不登陆也可以访问 -->
+	<http pattern="/*.html" security="none"></http>
+	<http pattern="/css/**" security="none"></http>
+	<http pattern="/img/**" security="none"></http>
+	<http pattern="/js/**" security="none"></http>
+	<http pattern="/plugins/**" security="none"></http>
+	<!--这里需要加上对添加店铺信息的时候需要放行  -->
+	<http pattern="/seller/add.do" security="none"></http>
+
+
+	<!-- 页面的拦截规则    use-expressions:是否启动SPEL表达式 默认是true -->
+	<http use-expressions="false" >
+		<!-- 当前用户必须有ROLE_USER的角色 才可以访问根目录及所属子目录的资源 -->
+		<intercept-url pattern="/**" access="ROLE_SELLER"/>
+		<!-- 开启表单登陆功能 -->
+		<!-- default-target-url:这个表示登录成功默认跳转到的页面 login-page：这个表示指定的表单进行登录，不用spring-security提供的 -->
+		<form-login  login-page="/shoplogin.html" default-target-url="/admin/index.html" authentication-failure-url="/pinyougou-shop-web/login.html" always-use-default-target="true"/>
+		<csrf disabled="true"/>
+		<headers>
+			<frame-options policy="SAMEORIGIN"/>
+		</headers>
+		<!-- 这个是当你点击退出时候，spring-security会自动帮我们清除掉当前登录的信息和session -->
+		<logout/>
+	</http>
+	
+	
+	<!-- 认证管理器 -->
+	<authentication-manager>
+		<authentication-provider user-service-ref="UserDetailsService">
+		<!-- 这个user-service其实就是相当于是你的用户源，现在改为从数据库中拿到，
+		就必须得经过UserDetailsServiceImpl.java这个我们自定义的类 
+		而且这个类必须需要实现UserDetailsService这个接口，下面会先把这个自定义的类注入进来-->
+			<!-- <user-service>
+				<user name="admin" password="123456" authorities="ROLE_ADMIN"/>
+				<user name="sunwukong" password="dasheng" authorities="ROLE_ADMIN"/>
+				<user name="wangwei" password="123456" authorities="ROLE_ADMIN"/>
+			</user-service> -->
+		<!-- 因为在用户添加的时候已经用Bcrypt加密了密码，这里需要使用spring-security来提供对应的方法来进行解密 -->
+		<password-encoder ref="bcryptEncoder"></password-encoder>
+		</authentication-provider>	
+	</authentication-manager>
+		
+	<!-- 这个是注入认证类，也就是你自定义的那个实现 UserDetailsService这个接口的类-->
+	<beans:bean id="UserDetailsService" class="com.pinyougou.service.UserDetailsServiceImpl">
+		<beans:property name="sellerService" ref="sellerService"></beans:property>
+		
+	</beans:bean>
+		
+	<!-- 因为在使用远程微服务的时候需要用到service层的服务工程，所以这里需要吧service层的服务工程通过dubbo来引入进来
+	1.需要先在认证类中加入一个属性
+	 -->
+	 <!-- 引入dubbo服务：1、需要把dubbo有关的约束头文件也要加进来  2.然后把接口相对路径加上 3.把认证管理类的name给id的属性-->
+	<dubbo:application name="pinyougou-shop-web" />
+	<dubbo:registry address="zookeeper://192.168.25.132:2181"/>
+	<!-- 这个可以看成是一个bean为sellerService的一个类 -->
+	<dubbo:reference id="sellerService" interface="com.pinyougou.sellergoods.service.SellerService"></dubbo:reference>
+	
+	<!-- 这里需要加上从认证管理器中加入的解密bean类 -->
+	<beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
+	
+</beans:beans>
