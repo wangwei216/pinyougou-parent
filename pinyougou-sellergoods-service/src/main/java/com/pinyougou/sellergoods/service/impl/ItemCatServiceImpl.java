@@ -96,5 +96,15 @@ public class ItemCatServiceImpl implements ItemCatService {
 		Page<TbItemCat> page= (Page<TbItemCat>)itemCatMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
+
+		@Override
+		public List<TbItemCat> findByparentId(Long parentId) {
+			//通过Criteria自定义查询规则
+			TbItemCatExample example = new TbItemCatExample();
+			Criteria criteria = example.createCriteria();
+			//这个就表示条件限制就是当parentId等于这个参数的时候
+			criteria.andParentIdEqualTo(parentId);
+			return itemCatMapper.selectByExample(example);
+		}
 	
 }
