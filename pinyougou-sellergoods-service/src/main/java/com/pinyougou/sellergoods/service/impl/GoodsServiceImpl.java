@@ -1,13 +1,17 @@
 package com.pinyougou.sellergoods.service.impl;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.pinyougou.mapper.TbGoodsDescMapper;
 import com.pinyougou.mapper.TbGoodsMapper;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojo.TbGoodsExample;
 import com.pinyougou.pojo.TbGoodsExample.Criteria;
+import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.sellergoods.service.GoodsService;
 
 import entity.PageResult;
@@ -22,6 +26,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
 	private TbGoodsMapper goodsMapper;
+	@Autowired
+	private TbGoodsDescMapper goodsDescMapper;
+
 	
 	/**
 	 * 查询全部
@@ -42,11 +49,18 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	/**
-	 * 增加
+	 * 这个是商品录入信息的增加
+	 * goods:这个表示是商品组合类
 	 */
 	@Override
-	public void add(TbGoods goods) {
-		goodsMapper.insert(goods);		
+	public void add(Goods goods) {
+		//设置未申请状态
+		goods.getGoods().setAuditStatus("0");
+		goodsMapper.insert(goods.getGoods());
+		//因为添加一个组合类，其实也就是相当于把组合类下面的子类都要同时添加进去、
+		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());
+		//插入扩展信息表中
+		goodsDescMapper.insert(goods.getGoodsDesc());
 	}
 
 	

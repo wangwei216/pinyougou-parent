@@ -46,7 +46,8 @@ public class ItemCatServiceImpl implements ItemCatService {
 	 */
 	@Override
 	public void add(TbItemCat itemCat) {
-		itemCatMapper.insert(itemCat);		
+		itemCatMapper.insert(itemCat);
+		
 	}
 
 	

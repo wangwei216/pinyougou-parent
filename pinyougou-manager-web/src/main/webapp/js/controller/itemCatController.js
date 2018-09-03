@@ -32,10 +32,12 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 	}
 	
 	//保存 
-	$scope.save=function(){				
+	$scope.save=function(){			
+		alert("123");
 		var serviceObject;//服务层对象  				
 		if($scope.entity.id!=null){//如果有ID
 			serviceObject=itemCatService.update( $scope.entity ); //修改  
+			alert($scope.entity.id);
 		}else{
 			serviceObject=itemCatService.add( $scope.entity  );//增加 
 		}				
@@ -112,6 +114,19 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		$scope.findByParentId(p_entity.id);
 		
 	}
+	
+	//添加商品的分类
+	$scope.parentId=0;//先获取上级的ID方便知道在哪个分类下进行添加初始化为0
+	//根据上级ID显示下级列表 
+	$scope.findByParentId=function(parentId){
+		$scope.parentId=parentId;//记住上级ID
+		itemCatService.findByParentId(parentId).success(
+			function(response){
+				$scope.list=response;
+			}			
+		);
+	}   
+
 	
 	
 	

@@ -32,7 +32,7 @@ app.service('sellerService',function($http){
 	
 	//更改店铺状态
 	this.updateStatus= function(sellerId,status){
-		$http.get('../seller/updateStatus.do?sellerId='+sellerId+'&status='+status);
+		$http.get('../pinyougou-shop-web/seller/updateStatus.do?sellerId='+sellerId+'&status='+status);
 	}
 	
 });
