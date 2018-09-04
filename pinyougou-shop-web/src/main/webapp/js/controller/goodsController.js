@@ -100,7 +100,6 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService,up
 			function(response){
 				if(response.success){
 					$scope.image_entity.url= response.message;
-//					alert(response.message);
 				}else{
 					alert(response.message);					
 				}
