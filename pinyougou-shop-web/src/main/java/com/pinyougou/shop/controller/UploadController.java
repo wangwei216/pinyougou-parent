@@ -26,7 +26,6 @@ public class UploadController {
 		System.out.println(originalFilename);
 		
 		String extName = originalFilename.substring(originalFilename.lastIndexOf(".")+1);	
-		System.out.println(extName);
 		try {
 			//这里是通过一个工具类直接得到一个fastdfs客户端
 			util.FastDFSClient client = new FastDFSClient("classpath:config/fdfs_client.conf");
@@ -34,7 +33,7 @@ public class UploadController {
 			String fileId = client.uploadFile(file.getBytes(), extName);
 			//拼接成完整的图片路径地址
 			String url =  file_server_url+fileId;
-			System.out.println("上传成功！");
+			System.out.println("上传成功！" + url);
 			return new Result(true, url);
 
 		} catch (Exception e) {

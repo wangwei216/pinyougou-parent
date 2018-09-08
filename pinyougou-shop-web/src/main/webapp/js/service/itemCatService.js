@@ -20,7 +20,6 @@ app.service('itemCatService',function($http){
 	//修改 
 	this.update=function(entity){
 		return  $http.post('../itemCat/update.do',entity );
-		alert($scope.entity.id);
 	}
 	//删除
 	this.dele=function(ids){
@@ -32,29 +31,8 @@ app.service('itemCatService',function($http){
 	}  
 	//根据上级分类查询商品分类列表
 	this.findByParentId=function(parentId){
+		alert(parentId);
 		return $http.get('../itemCat/findByParentId.do?parentId='+parentId);
 	}
-	
-	//保存 新建的商品分类信息
-	$scope.save=function(){		
-		var serviceObject;//服务层对象  				
-		if($scope.entity.id!=null){//如果有ID
-			serviceObject=itemCatService.update( $scope.entity ); //修改  
-		}else{
-			$scope.entity.parentId=$scope.parentId;//赋予上级ID
-			serviceObject=itemCatService.add( $scope.entity  );//增加 
-		}			
-		serviceObject.success(
-			function(response){
-				if(response.success){
-					//重新查询 
-					$scope.findByParentId($scope.parentId);//重新加载
-				}else{
-					alert(response.message);
-				}
-			}		
-		);				
-	}
-
 	
 });
