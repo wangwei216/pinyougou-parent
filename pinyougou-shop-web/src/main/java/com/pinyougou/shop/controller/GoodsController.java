@@ -5,7 +5,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojogroup.Goods;
@@ -45,16 +44,16 @@ public class GoodsController {
 	}
 	
 	/**
-	 * 增加商品信息的组合实体类商品表goods和goodsDesc
+	 * 增加
 	 * @param goods
 	 * @return
 	 */
 	@RequestMapping("/add")
 	public Result add(@RequestBody Goods goods){
-		//设置商家ID
+		//获取商家ID
 		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
-		//然后为商家设置ID
-		goods.getGoods().setSellerId(sellerId);
+		goods.getGoods().setSellerId(sellerId);//设置商家ID
+		
 		try {
 			goodsService.add(goods);
 			return new Result(true, "增加成功");
