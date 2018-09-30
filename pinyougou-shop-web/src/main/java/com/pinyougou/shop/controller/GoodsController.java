@@ -70,7 +70,19 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody TbGoods goods){
+	public Result update(@RequestBody Goods goods){
+		//在更新商品的时候，需要判断当前登录的卖家的Id是不是和这个goods是不是和这个当前登录的卖家一样
+		//先拿到当前登录的卖家的id
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		//通过商品的ID去查询卖家
+		Goods goods2 = goodsService.findOne(goods.getGoods().getId());
+		//判断商品的卖家Id和登录的卖家Id是不是一样，
+		if(!goods2.getGoods().getSellerId().equals(sellerId) || !goods.getGoods().getSellerId().equals(sellerId)){
+			//如果有一个不一样就直接返回错误
+			return new Result(false, "非法操作！");
+		}
+		
+		
 		try {
 			goodsService.update(goods);
 			return new Result(true, "修改成功");

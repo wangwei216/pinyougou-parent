@@ -22,6 +22,7 @@ import com.pinyougou.pojo.TbGoodsDesc;
 import com.pinyougou.pojo.TbGoodsExample;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbItemCat;
+import com.pinyougou.pojo.TbItemExample;
 import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.pojo.TbGoodsExample.Criteria;
 import com.pinyougou.pojogroup.Goods;
@@ -150,8 +151,50 @@ public class GoodsServiceImpl implements GoodsService {
 	 * 修改
 	 */
 	@Override
-	public void update(TbGoods goods){
-		goodsMapper.updateByPrimaryKey(goods);
+	public void update(Goods goods){
+		//这个是当修改完商品信息的组合表的时候，需要更新这个组合实体表，先从基本表开始
+		goodsMapper.updateByPrimaryKey(goods.getGoods());  //更新商品基本表
+		//更新商品的扩展表，其实也就是商品的描述表
+		goodsDescMapper.updateByPrimaryKey(goods.getGoodsDesc());
+		
+	
+		//然后是先删除原来的SKU的列表，然后再插入新的SKU列表
+		TbItemExample example = new TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria createCriteria = example.createCriteria();
+		createCriteria.andGoodsIdEqualTo(goods.getGoods().getId());
+		//然后直接删除
+		itemMapper.deleteByExample(example);
+		//这里是插入新的SKU列表 
+		goodsDescMapper.insert(goods.getGoodsDesc());//插入商品扩展表数据
+ 		if("1".equals(goods.getGoods().getIsEnableSpec())){
+			for(TbItem item:   goods.getItemList()){
+				//构建标题  SPU名称+ 规格选项值
+				String title=goods.getGoods().getGoodsName();//SPU名称
+				Map<String,Object> map=  JSON.parseObject(item.getSpec());
+				for(String key:map.keySet()) {
+					title+=" "+map.get(key);
+				}
+				item.setTitle(title);
+				
+				setItemValues(item,goods);
+				
+				itemMapper.insert(item);
+			}
+		}else{//没有启用规格			
+			
+			TbItem item=new TbItem();
+			item.setTitle(goods.getGoods().getGoodsName());//标题
+			item.setPrice(goods.getGoods().getPrice());//价格
+			item.setNum(99999);//库存数量
+			item.setStatus("1");//状态
+			item.setIsDefault("1");//默认
+			item.setSpec("{}");//规格
+			
+			setItemValues(item,goods);
+			
+			itemMapper.insert(item);
+		}
+		
 	}	
 	
 	/**
@@ -169,8 +212,18 @@ public class GoodsServiceImpl implements GoodsService {
 		//这个是查询商品信息的扩展表
 		TbGoodsDesc tbGoodsDesc = goodsDescMapper.selectByPrimaryKey(id);
 		goods.setGoodsDesc(tbGoodsDesc);
-	
-		return goods;//goodsMapper.selectByPrimaryKey(id);
+		
+		//这里是构建一个查询对象
+		TbItemExample example = new TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria createCriteria = example.createCriteria();
+		//构建查询条件，等于goods表的id的
+		createCriteria.andGoodsIdEqualTo(id);
+		//这里是读取SKU的列表信息
+		List<TbItem> itemsList= itemMapper.selectByExample(example);
+		goods.setItemList(itemsList);
+		
+		//这里是返回组合实体类对象
+		return goods;
 	}
 
 	/**

@@ -60,7 +60,7 @@
 	 -->
 	 <!-- 引入dubbo服务：1、需要把dubbo有关的约束头文件也要加进来  2.然后把接口相对路径加上 3.把认证管理类的name给id的属性-->
 	<dubbo:application name="pinyougou-shop-web" />
-	<dubbo:registry address="zookeeper://192.168.25.129:2181"/>
+	<dubbo:registry address="zookeeper://192.168.25.132:2181"/>
 	<!-- 这个可以看成是一个bean为sellerService的一个类 -->
 	<dubbo:reference id="sellerService" interface="com.pinyougou.sellergoods.service.SellerService"></dubbo:reference>
 	
