@@ -60,4 +60,14 @@ public interface GoodsService {
 	 */
 	public PageResult findPage(TbGoods goods, int pageNum,int pageSize);
 	
+	
+	
+	/**
+	 * 这个是更新状态的
+	 * @param ids
+	 * @param status
+	 */
+	public void updateStatus(Long ids[],String status);
+
+	
 }

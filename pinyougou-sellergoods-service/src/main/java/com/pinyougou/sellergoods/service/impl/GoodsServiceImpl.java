@@ -277,5 +277,17 @@ public class GoodsServiceImpl implements GoodsService {
 		Page<TbGoods> page= (Page<TbGoods>)goodsMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
+
+		@Override
+		public void updateStatus(Long[] ids, String status) {
+			//这个是批量更新运营商的状态的
+			for(Long id: ids){
+				TbGoods goods= goodsMapper.selectByPrimaryKey(id);
+				//然后传进来的状态给set到goods的实体中
+				goods.setAuditStatus(status);
+				goodsMapper.updateByPrimaryKey(goods);
+			}
+			
+		}
 	
 }
